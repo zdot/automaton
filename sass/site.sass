@@ -1,0 +1,404 @@
+@import _normalize
+@import _reset
+@import jeet
+@import compass
+
+
+// ---------------------------------------------- //
+//  ICONS
+// ---------------------------------------------- //
+
+
+@mixin ico-arrow-down
+    +align()
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+    border-top: 6px solid cyan
+    height: 0
+    width: 0
+
+
+@mixin ico-arrow-up
+    +align()
+    border-bottom: 6px solid cyan
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+    height: 0
+    width: 0
+
+
+.ico-menu
+    position: relative
+
+
+.ico-menu:before
+    
+    $color: cyan
+    
+    content: ""
+    position: absolute
+    left: 0
+    top: 5px
+    width: 20px
+    height: 2px
+    background: $color
+    box-shadow: 0 4px 0 0 $color, 0 8px 0 0 $color
+
+
+// ---------------------------------------------- //
+//  COLORS
+// ---------------------------------------------- //
+
+
+$color-1: #ddd
+$color-2: #ddd + 10
+$color-3: #ddd + 20
+$color-4: #ddd + 30
+
+
+// ---------------------------------------------- //
+//  TYPOGRAPHY
+// ---------------------------------------------- //
+
+// compass vertical rhythm
+
+$base-font-family: 'Open Sans', sans-serif
+$base-font-size: 14px
+$base-line-height: 8px
+
++establish-baseline
+
+body
+    font-family: $base-font-family
+
+
+// ------------------------------------- //
+// styles                                //
+// ------------------------------------- //
+
+
+body
+    background-color: $color-2
+    overflow: hidden
+
+
+// ------------------------------------- //
+// PANEL                                 //
+// ------------------------------------- //
+
+
+.settings__group
+    border-bottom: 1px solid #ddd
+    float: left
+    margin-bottom: rhythm(2)
+    padding-bottom: rhythm(1)
+    width: 100%
+
+
+.settings__group
+.settings__group--last
+    border-bottom: 0
+
+
+.settings__left-column
+    border-right: 1px solid #ddd
+    bottom: 0
+    left: 0
+    padding: rhythm(2)
+    position: absolute
+    top: 20px
+    z-index: 2
+    width: rhythm(30)
+
+
+.settings__right-column
+    bottom: 0
+    left: 0
+    top: 20px
+    padding-left: rhythm(32)
+    position: absolute
+    width: 100%
+    z-index: 1
+
+
+.settings__block
+    clear: both
+    float: left
+    margin-bottom: rhythm(1)
+    width: 100%
+
+
+.settings input[type='text']
+    font-family: 'PT Mono'
+    transition: background-color .3s ease
+    background-color: $color-2
+    border: 0
+    float: left
+    outline: 0
+    height: rhythm(3)
+    padding-left: 5px
+
+.settings input[type='text']::selection
+    color cyan
+
+
+.settings input[type='text']:focus, .settings input[type='text']:hover
+    background-color: cyan + 200
+
+
+.settings__readonly
+    background-color: white
+    border: 1px solid white
+    float: left
+    padding: 8px 5px 7px 5px
+    width: 100%
+    word-break: break-all
+
+
+.settings .rules canvas
+    background-color: #ddd
+    border-left: 1px solid #ddd
+    border-top: 1px solid #ddd
+    margin-bottom: 8px
+    margin-right: 10px
+    transition: background-color .3s ease, border-color .3s ease
+
+
+.settings .rules canvas:hover
+    background-color: cyan + 200
+    border-color: cyan + 200
+
+
+// scrollable right column
+
+
+.scrollable
+    bottom: 0
+    height: 100%
+    overflow-y: scroll
+    padding-right: rhythm(2)
+    position: relative
+
+
+.scrollable__inner
+    height: auto
+    overflow: scroll
+    padding-top: rhythm(2)
+    position: relative
+
+
+.scrollable__push
+    bottom: 0
+    height: 100%
+    left: 0
+    position: absolute
+    top: 0
+
+
+.scrollable::-webkit-scrollbar
+    width: 10px
+
+
+.scrollable::-webkit-scrollbar-track
+    background-color: magenta + 200
+
+
+.scrollable::-webkit-scrollbar-thumb
+    background-color: magenta
+
+
+.settings .rules canvas:hover
+    cursor: pointer
+
+
+.label
+    position: relative
+    height: rhythm(3)
+
+
+.label__inner
+    +align($direction: v)
+
+
+.settings label
+    color: #666
+    display: block
+    font-size: .85em
+    margin-bottom: rhythm(1)
+
+
+.range
+    position: relative
+    height: rhythm(3)
+
+
+.range__input
+    +align($direction: v)
+    -webkit-appearance: none
+    background-color: $color-2
+    border: 0
+    height: 12px
+    padding: 0
+    transition: background .3s ease, border .3s ease
+    width: 100%
+
+
+.range__input:focus
+    outline: none
+    border: 0
+
+
+::-moz-focus-outer
+    border: 0
+
+
+.range__input::-moz-range-track
+    opacity: 0
+
+
+.range__input::-webkit-slider-thumb
+    -webkit-appearance: none
+    background: #ddd - 100
+    border-radius: 0
+    border: 0
+    height: 12px
+    transition: background .3s ease, border .3s ease
+    width: 12px
+
+
+.range__input::-moz-range-thumb
+    background: #ddd - 100
+    border-radius: 0
+    border: 0
+    height: 12px
+    transition: background .3s ease, border .3s ease
+    width: 12px
+
+
+.range__input::-ms-thumb
+    background: #ddd - 100
+    border-radius: 0
+    border: 0
+    height: 12px
+    transition: background .3s ease, border .3s ease
+    width: 12px
+
+
+.range__input:hover
+    cursor: pointer
+    background-color: cyan + 200
+
+
+.range__input:hover::-webkit-slider-thumb,
+.range__input:focus::-webkit-slider-thumb
+    background-color: cyan
+
+
+.button
+    +adjust-font-size-to(12px)
+    background-color: cyan + 170
+    border: 0
+    border-bottom: 2px solid cyan
+    color: #666
+    height: rhythm(4)
+    text-align: center !important
+    transition: background-color .3s ease
+
+
+.button:focus
+    outline: 0
+
+
+.button.button--magenta
+    background-color: magenta + 170
+    border-color: magenta
+
+
+.button.button--magenta:hover
+    background-color: magenta + 200
+
+
+.button:active
+    background-color: cyan + 170
+    border-top: 3px solid white
+    border-bottom: 0
+
+
+.button:hover
+    background-color: cyan + 200
+
+
+// ---------------------------------------------- //
+//  JS RESIZABLE
+// ---------------------------------------------- //
+
+
+$bar-height: 20px
+
+
+.js-resizable
+    background-color: white
+    bottom: 0
+    height: 300px
+    overflow: hidden
+    padding-top: $bar-height
+    position: fixed
+    width: 100%
+
+
+.js-resizable-bar
+    background-color: cyan + 200
+    cursor: ns-resize
+    height: $bar-height
+    position: absolute
+    top: 0
+    transition: background-color .3s ease
+    width: 100%
+    z-index: 3
+
+
+.js-resizable-wrapper
+    +span(1)
+    padding-top: rhythm(30)
+
+
+.js-resizable-animate
+    transition: height .3s ease
+
+
+.js-resizable-close
+    width: 20px
+    height: 20px
+    float: right
+    position: relative
+
+
+.js-resizable-close:hover
+    cursor: pointer
+
+
+.js-resizable-grab
+    +align()
+    width: 30px
+    height: 20px
+
+
+.js-resizable--open .resizable-arrow
+    +ico-arrow-down
+
+
+.js-resizable--closed .resizable-arrow
+    +ico-arrow-up
+
+
+// ---------------------------------------------- //
+//  LAYOUT
+// ---------------------------------------------- //
+
+
+.col-1
+    +col(1)
+
+
+.col-2
+    +col(1/2, $gutter: 5)
