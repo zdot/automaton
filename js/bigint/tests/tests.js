@@ -1,4 +1,4 @@
-// figured out how to make unit tests AMD compat here: 
+// make unit tests AMD compat here: 
 // http://www.nathandavison.com/article/17/using-qunit-and-requirejs-to-build-modular-unit-tests
 
 
@@ -10,8 +10,10 @@
 define(['bigint'], function(BigInt) {
     
     var run = function() {
-
-        QUnit.module('OBJECT')
+        
+        
+        QUnit.module('OBJECT');
+        
         
         QUnit.test( 'list', function( assert ) {
             
@@ -81,18 +83,6 @@ define(['bigint'], function(BigInt) {
         QUnit.module('ADD');
         
         
-        // public add method
-        
-        // ++ +- -+ --
-        // 01 01 01 01 --> a < b
-        // 10 10 10 10 --> a > b
-        
-        // a, b = 0
-        
-        
-        // ++
-        
-        
         QUnit.test( 'add: pos / pos (a.int < b.int)', function( assert ) {
         
             var a = BigInt(123);
@@ -100,7 +90,7 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,6,9,0]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
         
@@ -112,12 +102,9 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,6,9,0]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
-        
-        
-        // +-
         
         
         QUnit.test( 'add: pos / neg (a.int < b.int)', function( assert ) {
@@ -127,7 +114,7 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,4,4,4]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
@@ -139,12 +126,9 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,4,4,4]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
-        
-        
-        // -+
         
         
         QUnit.test( 'add: neg / pos (a.int > b.int)', function( assert ) {
@@ -154,7 +138,7 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,4,4,4]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
@@ -166,12 +150,9 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,4,4,4]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
-        
-        
-        // --
         
         
         QUnit.test( 'add: neg / neg (a.int > b.int)', function( assert ) {
@@ -181,7 +162,7 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,6,9,0]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
@@ -193,7 +174,7 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [4,6,9,0]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
@@ -205,7 +186,7 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.add(a, b);
             
             assert.deepEqual(c.int, [0]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
         
@@ -240,18 +221,6 @@ define(['bigint'], function(BigInt) {
         QUnit.module('SUB');
         
         
-        // public sub method
-        
-        // ++ +- -+ --
-        // 01 01 01 01 --> a < b
-        // 10 10 10 10 --> a > b
-        
-        // a, b = 0
-        
-        
-        // ++
-        
-        
         QUnit.test( 'sub: a < b', function( assert ) {
         
             var a = BigInt(123);
@@ -276,9 +245,6 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // +-
-        
-        
         QUnit.test( 'sub: pos / neg (a.int > b.int)', function( assert ) {
         
             var a = BigInt(5678);
@@ -286,34 +252,31 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.sub(a, b);
             
             assert.deepEqual(c.int, [5,8,0,1]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
         
         
         QUnit.test( 'sub: pos / neg (a.int < b.int)', function( assert ) {
-        
+            
             var a = BigInt(123);
             var b = BigInt(-5678);
             var c = BigInt.sub(a, b);
             
             assert.deepEqual(c.int, [5,8,0,1]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
         
         
-        // -+
-        
-        
         QUnit.test( 'sub: neg / pos (a.int < b.int)', function( assert ) {
-        
+            
             var a = BigInt(-123);
             var b = BigInt(4567);
             var c = BigInt.sub(a, b);
             
             assert.deepEqual(c.int, [4,6,9,0]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
@@ -325,43 +288,37 @@ define(['bigint'], function(BigInt) {
             var c = BigInt.sub(a, b);
             
             assert.deepEqual(c.int, [4,6,9,0]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
         
-        // --
-        
-        
         QUnit.test( 'sub: neg / neg (a.int > b.int)', function( assert ) {
-        
+            
             var a = BigInt(-4567);
             var b = BigInt(-123);
             var c = BigInt.sub(a, b);
             
             assert.deepEqual(c.int, [4,4,4,4]);
-            assert.equal(c.sign, -1)
+            assert.equal(c.sign, -1);
             
         });
         
         
         QUnit.test( 'sub: neg / neg (a.int < b.int)', function( assert ) {
-        
+            
             var a = BigInt(-123);
             var b = BigInt(-4567);
             var c = BigInt.sub(a, b);
             
             assert.deepEqual(c.int, [4,4,4,4]);
-            assert.equal(c.sign, 1)
+            assert.equal(c.sign, 1);
             
         });
         
         
-        // a, b = 0
-        
-        
         QUnit.test( 'sub: 0 - 0', function( assert ) {
-        
+            
             var a = BigInt(0);
             var b = BigInt(0);
             var c = BigInt.sub(a, b);
@@ -373,14 +330,14 @@ define(['bigint'], function(BigInt) {
         
         QUnit.test( 'sub: random', function( assert ) {
             
-            var a = Math.random() * 1000 | 0;
-            var b = Math.random() * 1000 | 0;
-        
+            var a = Math.floor(Math.random() * 1000);
+            var b = Math.floor(Math.random() * 1000);
+            
             var _a = BigInt(a);
             var _b = BigInt(b);
             
             var _c = BigInt.sub(_a, _b);
-            var _c = parseInt( _c.int.join('') ) * _c.sign
+            _c = parseInt( _c.int.join('') ) * _c.sign;
             
             assert.equal(_c, a - b, a + ' - ' + b + ' = ' + (a - b) );
             
@@ -388,7 +345,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'sub: base 4', function( assert ) {
-        
+            
             var a = BigInt(2122110);
             var b = BigInt(103102);
             var c = BigInt.sub(a, b, 4);
@@ -399,7 +356,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'sub: base 16', function( assert ) {
-        
+            
             var a = BigInt([4,13,2]);
             var b = BigInt([7,11]);
             var c = BigInt.sub(a, b, 16);
@@ -417,26 +374,6 @@ define(['bigint'], function(BigInt) {
         QUnit.module('MUL');
         
         
-        // private mul method
-        
-        
-        // ++
-        // 01
-        // 10
-
-        
-        
-        // public mul method
-        
-        // ++ +- -+ --
-        // 01 01 01 01 --> a < b
-        // 10 10 10 10 --> a > b
-        
-        // a, b = 0
-        
-        
-        // ++
-        
         QUnit.test( 'mul: a < b', function( assert ) {
         
             var a = BigInt(123);
@@ -461,11 +398,8 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // +-
-        
-        
         QUnit.test( 'mul: a < b', function( assert ) {
-        
+            
             var a = BigInt(123);
             var b = BigInt(-4567);
             var c = BigInt.mul(a, b);
@@ -477,7 +411,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mul: a > b', function( assert ) {
-        
+            
             var a = BigInt(4567);
             var b = BigInt(-123);
             var c = BigInt.mul(a, b);
@@ -488,11 +422,8 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // -+
-        
-        
         QUnit.test( 'mul: a < b', function( assert ) {
-        
+            
             var a = BigInt(-123);
             var b = BigInt(4567);
             var c = BigInt.mul(a, b);
@@ -504,7 +435,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mul: a > b', function( assert ) {
-        
+            
             var a = BigInt(-4567);
             var b = BigInt(123);
             var c = BigInt.mul(a, b);
@@ -515,11 +446,8 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // --
-        
-        
         QUnit.test( 'mul: a < b', function( assert ) {
-        
+            
             var a = BigInt(-123);
             var b = BigInt(-4567);
             var c = BigInt.mul(a, b);
@@ -531,7 +459,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mul: a > b', function( assert ) {
-        
+            
             var a = BigInt(-4567);
             var b = BigInt(-123);
             var c = BigInt.mul(a, b);
@@ -540,13 +468,10 @@ define(['bigint'], function(BigInt) {
             assert.equal(c.sign, 1);
             
         });
-        
-        
-        // a, b = 0
         
         
         QUnit.test( 'mul: 0 * 0', function( assert ) {
-        
+            
             var a = BigInt(0);
             var b = BigInt(0);
             var c = BigInt.mul(a, b);
@@ -559,14 +484,14 @@ define(['bigint'], function(BigInt) {
         
         QUnit.test( 'mul: random', function( assert ) {
             
-            var a = Math.random() * 1000 | 0;
-            var b = Math.random() * 1000 | 0;
-        
+            var a = Math.floor(Math.random() * 1000);
+            var b = Math.floor(Math.random() * 1000);
+            
             var _a = BigInt(a);
             var _b = BigInt(b);
             
             var _c = BigInt.mul(_a, _b);
-            var _c = parseInt( _c.int.join('') ) * _c.sign
+            _c = parseInt( _c.int.join('') ) * _c.sign;
             
             assert.equal(_c, a * b, a + ' * ' + b + ' = ' + (a * b) );
             
@@ -574,7 +499,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mul: base 5', function( assert ) {
-        
+            
             var a = BigInt(14414);
             var b = BigInt(140203);
             var c = BigInt.mul(a, b, 5);
@@ -585,7 +510,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mul: base 16', function( assert ) {
-        
+            
             var a = BigInt([4,13,2]);
             var b = BigInt([7,11]);
             var c = BigInt.mul(a, b, 16);
@@ -603,17 +528,6 @@ define(['bigint'], function(BigInt) {
         QUnit.module('DIV');
         
         
-        // public div method
-        
-        // ++ +- -+ --
-        // 01 01 01 01 --> a < b
-        // 10 10 10 10 --> a > b
-        
-        // a, b = 0
-        
-        
-        // ++
-        
         QUnit.test( 'div: a < b', function( assert ) {
         
             var a = BigInt(123);
@@ -638,9 +552,6 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // +-
-        
-        
         QUnit.test( 'div: a < b', function( assert ) {
         
             var a = BigInt(123);
@@ -654,7 +565,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'div: a > b', function( assert ) {
-        
+            
             var a = BigInt(4567);
             var b = BigInt(-123);
             var c = BigInt.div(a, b);
@@ -665,11 +576,8 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // -+
-        
-        
         QUnit.test( 'div: a < b', function( assert ) {
-        
+            
             var a = BigInt(-123);
             var b = BigInt(4567);
             var c = BigInt.div(a, b);
@@ -692,11 +600,8 @@ define(['bigint'], function(BigInt) {
         });
         
         
-        // --
-        
-        
         QUnit.test( 'div: a < b', function( assert ) {
-        
+            
             var a = BigInt(-123);
             var b = BigInt(-4567);
             var c = BigInt.div(a, b);
@@ -708,7 +613,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'div: a > b', function( assert ) {
-        
+            
             var a = BigInt(-4567);
             var b = BigInt(-123);
             var c = BigInt.div(a, b);
@@ -717,9 +622,6 @@ define(['bigint'], function(BigInt) {
             assert.equal(c.sign, 1);
             
         });
-        
-        
-        // a, b = 0
         
         
         QUnit.test( 'div: 0 / 0', function( assert ) {
@@ -738,14 +640,14 @@ define(['bigint'], function(BigInt) {
         
         QUnit.test( 'div: random', function( assert ) {
             
-            var a = Math.random() * 1000 | 0;
-            var b = Math.random() * 1000 | 0;
-        
+            var a = Math.floor(Math.random() * 1000);
+            var b = Math.floor(Math.random() * 1000);
+            
             var _a = BigInt(a);
             var _b = BigInt(b);
             
             var _c = BigInt.div(_a, _b);
-            var _c = parseInt( _c.int.join('') ) * _c.sign
+            _c = parseInt( _c.int.join('') ) * _c.sign;
             
             assert.equal(_c, Math.floor(a / b), a + ' / ' + b + ' = ' + Math.floor(a / b) );
             
@@ -753,7 +655,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'div: base 7', function( assert ) {
-        
+            
             var a = BigInt(40536);
             var b = BigInt(234);
             var c = BigInt.div(a, b, 7);
@@ -764,7 +666,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'div: base 16', function( assert ) {
-        
+            
             var a = BigInt([4,13,2]);
             var b = BigInt([7,11]);
             var c = BigInt.div(a, b, 16);
@@ -786,7 +688,7 @@ define(['bigint'], function(BigInt) {
             
             var a = BigInt(3);
             var b = BigInt(12);
-            var c = BigInt.pow(a, b)
+            var c = BigInt.pow(a, b);
             
             assert.deepEqual(c.int, [5,3,1,4,4,1]);
             
@@ -794,10 +696,10 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'pow: neg base, even exponent', function( assert ) {
-                
+            
             var a = BigInt(-32);
             var b = BigInt(6);
-            var c = BigInt.pow(a, b)
+            var c = BigInt.pow(a, b);
             
             assert.deepEqual(c.int, [1,0,7,3,7,4,1,8,2,4]);
             assert.equal(c.sign, 1);
@@ -806,10 +708,10 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'pow: neg base, odd exponent', function( assert ) {
-                
+            
             var a = BigInt(-2);
             var b = BigInt(3);
-            var c = BigInt.pow(a, b)
+            var c = BigInt.pow(a, b);
             
             assert.deepEqual(c.int, [8]);
             assert.equal(c.sign, -1);
@@ -818,10 +720,10 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'pow: 0 exponent', function( assert ) {
-                
+            
             var a = BigInt(2);
             var b = BigInt(0);
-            var c = BigInt.pow(a, b)
+            var c = BigInt.pow(a, b);
             
             assert.deepEqual(c.int, [1]);
             assert.equal(c.sign, 1);
@@ -835,7 +737,7 @@ define(['bigint'], function(BigInt) {
             
             var a = BigInt(2);
             var b = BigInt(-2);
-            var c = BigInt.pow(a, b)
+            var c = BigInt.pow(a, b);
             
             assert.deepEqual(c.int, [0]);
             assert.equal(c.sign, 1);
@@ -844,7 +746,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'pow: base 9', function( assert ) {
-        
+            
             var a = BigInt(146);
             var b = BigInt(5);
             var c = BigInt.pow(a, b, 9);
@@ -859,12 +761,6 @@ define(['bigint'], function(BigInt) {
         // ---------------------------------------------- //
         
         
-        // -+ --> odd / even
-        // 01 --> a > b
-        
-        // the sign of the result is always equal to the sign of b
-        
-        
         QUnit.module('MODULO');
         
         
@@ -872,7 +768,7 @@ define(['bigint'], function(BigInt) {
                 
             var a = BigInt(1234);
             var b = BigInt(2);
-            var c = BigInt.mod(a, b)
+            var c = BigInt.mod(a, b);
             
             assert.deepEqual(c.int, [0]);
             assert.equal(c.sign, 1);
@@ -884,7 +780,7 @@ define(['bigint'], function(BigInt) {
                 
             var a = BigInt(1234);
             var b = BigInt(17);
-            var c = BigInt.mod(a, b)
+            var c = BigInt.mod(a, b);
             
             assert.deepEqual(c.int, [1,0]);
             assert.equal(c.sign, 1);
@@ -898,7 +794,7 @@ define(['bigint'], function(BigInt) {
             
             var a = BigInt(2);
             var b = BigInt(1234);
-            var c = BigInt.mod(a, b)
+            var c = BigInt.mod(a, b);
             
             assert.deepEqual(c.int, [2]);
             assert.equal(c.sign, 1);
@@ -907,10 +803,10 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mod: odd (a > b)', function( assert ) {
-                
+            
             var a = BigInt(-987);
             var b = BigInt(13);
-            var c = BigInt.mod(a, b)
+            var c = BigInt.mod(a, b);
             
             assert.deepEqual(c.int, [1,2]);
             assert.equal(c.sign, 1);
@@ -919,7 +815,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mod: odd (a > b)', function( assert ) {
-                
+            
             var a = BigInt(987);
             var b = BigInt(-13);
             var c = BigInt.mod(a, b);
@@ -931,7 +827,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mod: odd (a > b)', function( assert ) {
-                
+            
             var a = BigInt(-78910);
             var b = BigInt(-991);
             var c = BigInt.mod(a, b);
@@ -943,7 +839,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mod: base 8', function( assert ) {
-        
+            
             var a = BigInt(173);
             var b = BigInt(115);
             var c = BigInt.mod(a, b, 8);
@@ -954,7 +850,7 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'mod: base 16', function( assert ) {
-        
+            
             var a = BigInt([7,11]);
             var b = BigInt([10]);
             var c = BigInt.mod(a, b, 16);
@@ -969,16 +865,16 @@ define(['bigint'], function(BigInt) {
         // ---------------------------------------------- //
         
         
-        QUnit.module('SORT')
+        QUnit.module('SORT');
         
         
         QUnit.test( 'sort: a, b, c (same length)', function( assert ) {
-                
+            
             var a = BigInt(123);
             var b = BigInt(456);
             var c = BigInt(789);
-            var args = [b, c, a]
-            BigInt.sort(args)
+            var args = [b, c, a];
+            BigInt.sort(args);
             
             assert.deepEqual(args, [a,b,c]);
             
@@ -986,12 +882,12 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'sort: a, b, c (diff length)', function( assert ) {
-                
+            
             var a = BigInt(12);
             var b = BigInt(456);
             var c = BigInt(78910);
-            var args = [b, c, a]
-            BigInt.sort(args)
+            var args = [b, c, a];
+            BigInt.sort(args);
             
             assert.deepEqual(args, [a,b,c]);
             
@@ -999,12 +895,12 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'sort: a, b, c (same length & pos / neg)', function( assert ) {
-                
+            
             var a = BigInt(123);
             var b = BigInt(456);
             var c = BigInt(-789);
-            var args = [b, c, a]
-            BigInt.sort(args)
+            var args = [b, c, a];
+            BigInt.sort(args);
             
             assert.deepEqual(args, [c,a,b]);
             
@@ -1012,12 +908,12 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'sort: a, b, c (diff length & pos / neg)', function( assert ) {
-                
+            
             var a = BigInt(123);
             var b = BigInt(-4);
             var c = BigInt(-78900);
-            var args = [b, a, c]
-            BigInt.sort(args)
+            var args = [b, a, c];
+            BigInt.sort(args);
             
             assert.deepEqual(args, [c,b,a]);
             
@@ -1029,13 +925,13 @@ define(['bigint'], function(BigInt) {
         // ---------------------------------------------- //
         
         
-        QUnit.module('BASE CONVERSION')
+        QUnit.module('BASE CONVERSION');
         
         
         QUnit.test( 'toBase: 2 from base 10', function( assert ) {
-                
+            
             var a = BigInt(0);
-            var b = BigInt.toBase(a.int, [2])
+            var b = BigInt.toBase(a.int, [2]);
             
             assert.deepEqual(b, [0], b);
             
@@ -1043,9 +939,9 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'toBase: 2 from base 10', function( assert ) {
-                
+            
             var a = BigInt(123);
-            var b = BigInt.toBase(a.int, [2])
+            var b = BigInt.toBase(a.int, [2]);
             
             assert.deepEqual(b, [1,1,1,1,0,1,1], b);
             
@@ -1053,9 +949,9 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'toBase: 3 from base 4', function( assert ) {
-                
+            
             var a = BigInt(103102);
-            var b = BigInt.toBase(a.int, [3], 4)
+            var b = BigInt.toBase(a.int, [3], 4);
             
             assert.deepEqual(b, [1,2,0,0,2,0,1], b);
             
@@ -1063,9 +959,9 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'toBase: 10 from base 2', function( assert ) {
-                
+            
             var a = BigInt(11110);
-            var b = BigInt.fromBase(a.int, 2)
+            var b = BigInt.fromBase(a.int, 2);
             
             assert.deepEqual(b, [3,0], b);
             
@@ -1073,18 +969,19 @@ define(['bigint'], function(BigInt) {
         
         
         QUnit.test( 'toBase: 16 from base 10', function( assert ) {
-                
+            
             var a = BigInt(123);
-            var b = BigInt.toBase(a.int, [1,6])
+            var b = BigInt.toBase(a.int, [1,6]);
             
             assert.deepEqual(b, [7,11], b);
             
         });
         
+        
         QUnit.test( 'toBase: 10 from base 16', function( assert ) {
-                
+            
             var a = BigInt([7,11]);
-            var c = BigInt.toBase(a.int, [2], 16)
+            var c = BigInt.toBase(a.int, [2], 16);
             
             assert.deepEqual(c, [1,1,1,1,0,1,1], c);
             
@@ -1093,9 +990,9 @@ define(['bigint'], function(BigInt) {
         
         QUnit.test( 'toBaseString: 16', function( assert ) {
             
-            var n = 123456
+            var n = 123456;
             var a = BigInt(n);
-            a = BigInt.toBase(a.int, [1,6])
+            a = BigInt.toBase(a.int, [1,6]);
             
             assert.equal(BigInt.toBaseString(a).join(''), (n).toString(16), (n).toString(16));
             
@@ -1104,9 +1001,9 @@ define(['bigint'], function(BigInt) {
         
         QUnit.test( 'toBaseString: 3', function( assert ) {
             
-            var n = 123456
+            var n = 123456;
             var a = BigInt(n);
-            a = BigInt.toBase(a.int, [3])
+            a = BigInt.toBase(a.int, [3]);
             
             assert.equal(BigInt.toBaseString(a).join(''), (n).toString(3), (n).toString(3));
             
@@ -1115,9 +1012,9 @@ define(['bigint'], function(BigInt) {
         
         QUnit.test( 'toBaseString: 36', function( assert ) {
             
-            var n = 123456
+            var n = 123456;
             var a = BigInt(n);
-            a = BigInt.toBase(a.int, [3,6])
+            a = BigInt.toBase(a.int, [3,6]);
             
             assert.equal(BigInt.toBaseString(a).join(''), (n).toString(36), (n).toString(36));
             
@@ -1128,11 +1025,12 @@ define(['bigint'], function(BigInt) {
             
             var n = (123456).toString(36);
             var a = BigInt( BigInt.fromBaseString(n) );
-            a = BigInt.toBase(a.int, [10], 36)
+            a = BigInt.toBase(a.int, [10], 36);
             
             assert.deepEqual(a, [1,2,3,4,5,6]);
         });
     };
     
-    return {'run': run}
-})
+    
+    return {'run': run};
+});
