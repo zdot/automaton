@@ -22,11 +22,12 @@ define(['utils'], function (_) {
         
         var dimensions = getDimensions(size);
         var css_class = 'automaton';
+        var rules = _.products(2, 3).reverse()
         
         this.aw = dimensions.w;
         this.ah = dimensions.h;
         this.size = size;
-        this.colors = _.createColors(colors);
+        this.colors = _.createColors(rules);
         this.ctx = _.createCanvas(
             this.cw, 
             this.ch, 
@@ -138,5 +139,4 @@ define(['utils'], function (_) {
     
     
     return Canvas;
-    
 });

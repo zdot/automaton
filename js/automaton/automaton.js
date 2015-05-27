@@ -38,7 +38,7 @@ define([
             colors, 
             neighborhood, 
             ruleID, 
-            input,
+            density,
             size) {
         
         this.pattern = new Pattern (
@@ -50,7 +50,7 @@ define([
             size, 
             this.pattern.rules );
         
-        this.input = input || '1';
+        this.createRandomInput(density)
         
         this.panel = new Panel (this.serializeOptions());
         
@@ -185,16 +185,23 @@ define([
     
     Automaton.prototype.createRandomInput = function (density) {
         
-        var seed = _.fill('0', this.canvas.aw, '');
-        
-        for (var i=0; i < this.pattern.colors * density; i++) {
+        if (density <= 1) {
             
-            var color = _.randInt(0, this.pattern.colors - 1);
-            var index = _.randInt(0, this.canvas.aw - 1);
-            seed = _.replaceAt(seed, index, color.toString(10));
+            this.input = '1'
         }
         
-        this.input = seed;
+        else {
+            
+            var seed = _.fill('0', this.canvas.aw, '');
+            
+            for (var i=0; i < this.pattern.colors * density; i++) {
+            
+                var color = _.randInt(0, this.pattern.colors - 1);
+                var index = _.randInt(0, this.canvas.aw - 1);
+                seed = _.replaceAt(seed, index, color.toString(10));
+            }
+            this.input = seed;
+        }
     };
     
     
