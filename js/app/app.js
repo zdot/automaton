@@ -61,7 +61,7 @@ define(['automaton'], function (Automaton) {
         
         if (regex.test(size)) {
             
-            return size;
+            return parseInt(size, 10);
         }
         return false;
     };
