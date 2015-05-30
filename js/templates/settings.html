@@ -1,5 +1,4 @@
 <div class='settings js-resizable'>
-  
   <div class='settings__bar js-resizable-bar'>
     <div class='js-resizable-grab'>
       <div class='ico-menu'></div>
@@ -8,11 +7,8 @@
     <div class='resizable-arrow'></div>
     </div>
   </div>
-  
   <div class='js-resizable-wrapper'>
-    
     <form name='settings__form' class='settings__form' id="settings__form">
-      
       <div class='settings__left-column'>
         <div class='settings__group'>
           <div class='settings__block'>
@@ -28,23 +24,22 @@
             <div class='range col-2'><input class='range__input js-change' type='range' min='1' max='10' value="{canvas.size}" name='size'></div>
           </div>
         </div>
-        <div class='settings__block'>
-          <input class='settings__input col-2 button js-button-random' type='submit' name='seed' value='random seed'>
-          <input class='settings__input col-2 button js-button-clear' type='submit' name='seed' value='clear'>
-        </div>
-        <div class='settings__block'>
-          <div class='label col-2'><label class='label__inner'>Density</label></div>
-          <input class='col-2' type='text' min='1' max='5' value='5' name='density' maxlength='5' autocomplete='off'>
+        <div class='settings__group'>
+          <div class='settings__block'>
+            <div class='label col-2'><label class='label__inner'>Density</label></div>
+            <input class='col-2 js-change' type='text' value='1' placeholder='1' name='density' maxlength='4' autocomplete='off'>
+          </div>
         </div>
       </div>
-      
       <div class='settings__right-column'>
         <div class='scrollable'>
           <div class='scrollable__inner'>
             <div class='scrollable__push'></div>
-            <div class='settings__block'>
-              <div class='label col-1'><label class='label__inner'>Rule</label></div>
-              <input class='col-1 js-change' type='text' value="{pattern.ruleID}" name='ruleID' autocomplete='off'>
+            <div class='settings__group'>
+              <div class='settings__block'>
+                <div class='label col-1'><label class='label__inner'>Rule</label></div>
+                <input class='col-1 js-change' type='text' value="{pattern.ruleID}" placeholder='0' name='ruleID' autocomplete='off'>
+              </div>
             </div>
             <div class='settings__block'>
                 <div class='rules col-1'></div>

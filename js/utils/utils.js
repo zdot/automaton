@@ -289,9 +289,9 @@ define(function () {
         
         var result = [];
         
-      for (var i=0; i < rules.length; i++) {
+        for (var i=0; i < rules.length; i++) {
             
-        var color = _.permToRGB(rules[i]);
+            var color = _.permToRGB(rules[i]);
             result[ _.twist(i, rules.length) ] = color;
         }
         return result;
@@ -306,13 +306,13 @@ define(function () {
     };
     
     
-    _.createCanvas = function (width, height, klass) {
+    _.createCanvas = function (width, height, class_) {
         
         var canvas = document.createElement('canvas');
         document.body.appendChild(canvas);
         canvas.width = width;
         canvas.height = height;
-        canvas.className = klass || '';
+        canvas.className = class_ || '';
         return canvas.getContext('2d');
     };
     

@@ -3,11 +3,13 @@ define([
     'canvas',
     'panel',
     'bigint', 
+    'hash',
     'utils'], function (
         Pattern, 
         Canvas,
         Panel,
         B, 
+        hash,
         _ ) {
     
     
@@ -50,9 +52,10 @@ define([
             size, 
             this.pattern.rules );
         
-        this.createRandomInput(density)
+        this.density = density;
+        this.createRandomInput(this.density);
         
-        this.panel = new Panel (this.serializeOptions());
+        this.panel = new Panel (this.optionsForPanel());
         
         // draw settings
         this._count = 0;
@@ -132,7 +135,7 @@ define([
     };
     
     
-    Automaton.prototype.serializeOptions = function () {
+    Automaton.prototype.optionsForPanel = function () {
         
         return {
             'pattern': {
@@ -155,13 +158,13 @@ define([
     
     Automaton.prototype.serializeAutomaton = function () {
         
-        return JSON.stringify({
+        return {
             'colors': this.pattern.colors,
             'neighborhood': this.pattern.neighborhood,
             'ruleID': B.toString_( this.pattern.ruleID ),
-            'input': this.input,
+            'density': this.density,
             'size': this.canvas.size
-        });
+        };
     };
     
     
@@ -187,37 +190,30 @@ define([
         
         if (density <= 1) {
             
-            this.input = '1'
+            this.input = '1';
         }
         
         else {
             
-            var seed = _.fill('0', this.canvas.aw, '');
+            var input = _.fill('0', this.canvas.aw, '');
             
             for (var i=0; i < this.pattern.colors * density; i++) {
             
                 var color = _.randInt(0, this.pattern.colors - 1);
                 var index = _.randInt(0, this.canvas.aw - 1);
-                seed = _.replaceAt(seed, index, color.toString(10));
+                input = _.replaceAt(input, index, color.toString(10));
             }
-            this.input = seed;
+            this.input = input;
         }
     };
     
     
-    Automaton.prototype.clearInput = function () {
+    Automaton.prototype.update = function (options) {
         
-        this.input = '1';
-    };
-    
-    
-    Automaton.prototype.update = function () {
-        
-        var options = this.panel.getOptions();
-        
+        this.density = options.density;
         this.updatePattern(options.pattern);
         this.updateCanvas(options.canvas);
-        this.input = this.input; // verify input length
+        this.createRandomInput(options.density);
         
         this.panel.form.dispatchEvent(this.panelUpdateEvent);
          
@@ -292,59 +288,43 @@ define([
             });
         
         
-        this.panel.form.addEventListener (
-            'panel.updateAutomaton', function(event) {
-                
-                if (event.detail.object === this_.panel) {
-                    this_.update();
-                }
-            });
-        
-        
-        this.panel.form.addEventListener (
-            'panel.randomInput', function(event) {
-                
-                if (event.detail.object === this_.panel) {
-                    
-                    var options = this_.panel.getOptions();
-                    this_.createRandomInput(options.seed.density);
-                    this_.update();
-                }
-            });
-        
-        
-        this.panel.form.addEventListener (
-            'panel.clearInput', function(event) {
-                
-                if (event.detail.object === this_.panel) {
-                
-                    this_.clearInput();
-                    this_.update();
-                }
-            });
-        
-        
         this.canvas.ctx.canvas.addEventListener (
             'canvas.updateAutomaton', 
             function(event) {
                 
                 if (event.detail.object === this_.canvas) {
-                    this_.update();
+                    
+                    this_.resetDraw();
+                    this_.drawloop();
                 }
             });
         
         
         this.canvas.ctx.canvas.addEventListener (
             'click', function (event) {
-                
+            
                 // otherwise firefox complains that
                 // event is not defined
-                
+            
                 window.event = event;
-                
+            
                 this_.setState(event.target);
                 this_.showPanel();
             });
+        
+        
+        window.addEventListener ('hashchange', function (event) {
+            
+            var options = hash.cleanParams(hash.parse(window.location.hash));
+            
+            this_.update(this_.panel.optionsForUpdate(
+                options.colors,
+                options.neighborhood,
+                options.ruleID,
+                options.density,
+                options.size
+            ));
+        });
     };
     
     
@@ -380,7 +360,7 @@ define([
     
     Automaton.prototype.putState = function (state, x, y, w, h, gap) {
       
-        gap = gap || 0
+        gap = gap || 0;
         
         // x, y, w, h --> cells, not pixels
         

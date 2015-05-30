@@ -1,9 +1,11 @@
 define([
     'bigint',
     'utils',
+    'hash',
     'text!templates/settings.html'], function (
         B, 
         _,
+        hash,
         optionsHTML ) {
     
     
@@ -23,10 +25,16 @@ define([
     };
     
     
+    // ------------------------------------- //
+    // RESIZABLE                             //
+    // ------------------------------------- //
+    
     var addClass = function(el, class_) {
         
         var regex = new RegExp('\\s?' + class_ + '\\s?');
+        
         if (! regex.test(el.className)) {
+            
             el.className += ' ' + class_;
         }
     };
@@ -38,10 +46,6 @@ define([
         el.className = el.className.replace(regex, ' ');
     };
     
-    
-    // ------------------------------------- //
-    // RESIZABLE                             //
-    // ------------------------------------- //
     
     function Resizable(el, barHeight, barColor) {
         
@@ -70,6 +74,7 @@ define([
         if (this._close) {
             
             this.closePanel();
+        
         } else {
             
             this.openPanel();
@@ -114,8 +119,11 @@ define([
         // close it the rest of the way
         
         if (e.clientY > window.innerHeight - this.barHeight * 2) {
+            
             this.closePanel();
+        
         } else {
+            
             addClass(this.resizable, 'js-resizable--open');
             removeClass(this.resizable, 'js-resizable--closed');
         }
@@ -199,21 +207,36 @@ define([
     }
     
     
-    Panel.prototype.getOptions = function () {
+    Panel.prototype.serializeOptions = function () {
+        
+        return {
+            'colors': parseInt(this.form.colors.value),
+            'neighborhood': parseInt(this.form.neighborhood.value),
+            'ruleID': this.form.ruleID.value,
+            'density': parseInt(this.form.density.value),
+            'size': parseInt(this.form.size.value)
+        };
+    };
+    
+    
+    Panel.prototype.optionsForUpdate = function (colors, neighborhood, ruleID, density, size) {
+        
+        colors = colors || this.form.colors.value;
+        neighborhood = neighborhood || this.form.neighborhood.value;
+        ruleID = ruleID || this.form.ruleID.value;
+        density = density || this.form.density.value;
+        size = size || this.form.size.value;
         
         var options = {
-            
-            pattern: {
-                colors: parseInt( this.form.colors.value ),
-                neighborhood: parseInt( this.form.neighborhood.value ),
-                ruleID: this.form.ruleID.value
+            'pattern': {
+                'colors': parseInt( colors ),
+                'neighborhood': parseInt( neighborhood ),
+                'ruleID': ruleID
             },
-            canvas: {
-                size: parseInt( this.form.size.value )
+            'density': parseInt( density ),
+            'canvas': {
+                'size': parseInt( size )
             },
-            seed: {
-                density: parseInt( this.form.density.value ) || 0
-            }
         };
         return options;
     };
@@ -270,6 +293,12 @@ define([
     };
     
     
+    Panel.prototype.updateDensity = function(automaton) {
+        
+        this.form.density.value = automaton.density;
+    };
+    
+    
     Panel.prototype.rulesClickEvent = function(colors) {
         
         var this_ = this;
@@ -287,9 +316,9 @@ define([
                 
                 rule = rule.concat( rules[i].dataset.value );
             }
-                
+            
                 this_.form.ruleID.value = B.fromBase(B(rule).int, colors).join('');
-                this_.form.dispatchEvent(this_.updateAutomaton);
+                hash.update(this_.serializeOptions());
             });
         }
     };
@@ -304,37 +333,10 @@ define([
             els[i].addEventListener(
                 'change', 
                 function() {
-                    this_.form.dispatchEvent(this_.updateAutomaton);
+                    
+                    hash.update(this_.serializeOptions());
             });
         }
-    };
-    
-    
-    Panel.prototype.randomInputClickEvent = function () {
-        
-        var this_ = this;
-        var el = this.form.querySelector('.js-button-random');
-        
-        el.addEventListener(
-            'click',
-            function(e) {
-                e.preventDefault();
-                this_.form.dispatchEvent(this_.randomInput);
-            });
-    };
-    
-    
-    Panel.prototype.clearInputClickEvent = function () {
-        
-        var this_ = this;
-        var el = this.form.querySelector('.js-button-clear');
-        
-        el.addEventListener(
-            'click',
-            function(e) {
-                e.preventDefault();
-                this_.form.dispatchEvent(this_.clearInput);
-            });
     };
     
     
@@ -348,7 +350,7 @@ define([
               
                 var ruleID;
                 
-                if (e.keyCode === 40) { // up
+                if (e.keyCode === 40) { // down
                     
                     e.preventDefault();
                     
@@ -357,10 +359,10 @@ define([
                         (e.shiftKey) ? B(10) : B(1));
                     
                     e.target.value = ruleID.int.join('');
-                    this_.form.dispatchEvent(this_.updateAutomaton);
+                    hash.update(this_.serializeOptions());
                 }
                 
-                if (e.keyCode === 38) { // down
+                if (e.keyCode === 38) { // up
                     
                     e.preventDefault();
                     
@@ -369,7 +371,53 @@ define([
                         (e.shiftKey) ? B(10) : B(1));
                     
                     e.target.value = ruleID.int.join('');
-                    this_.form.dispatchEvent(this_.updateAutomaton);
+                    hash.update(this_.serializeOptions());
+                }
+                
+                if (e.keyCode === 13) { // enter
+                    
+                    e.preventDefault();
+                    hash.update(this_.serializeOptions());
+                }
+        });
+    };
+    
+    
+    Panel.prototype.densityKeydownEvent = function () {
+        
+        var this_ = this;
+        
+        this.form.density.addEventListener(
+            'keydown',
+            function(e) {
+                
+                var value;
+                
+                if (e.keyCode === 40) { // down
+                    
+                    e.preventDefault();
+                    
+                    value = parseInt(e.target.value) - 1;
+                    value = (value < 1) ? 1 : value;
+                    e.target.value = value;
+                    
+                    hash.update(this_.serializeOptions());
+                }
+                
+                if (e.keyCode === 38) { // up
+                    
+                    e.preventDefault();
+                    
+                    value = parseInt(e.target.value) + 1;
+                    e.target.value = value;
+                    
+                    hash.update(this_.serializeOptions());
+                }
+                
+                if (e.keyCode === 13) { // enter
+                    
+                    e.preventDefault();
+                    hash.update(this_.serializeOptions());
                 }
         });
     };
@@ -389,6 +437,7 @@ define([
                     
                     // update ruleID
                     this_.updateRuleID(automaton);
+                    this_.updateDensity(automaton);
                     
                     // update rules
                     this_.drawRules(
@@ -407,29 +456,6 @@ define([
     
     
     Panel.prototype.initEvents = function () {
-        
-        var this_ = this;
-        
-        this.updateAutomaton = new CustomEvent(
-            'panel.updateAutomaton', {
-                detail: {
-                    object: this_
-                }
-            });
-        
-        this.randomInput = new CustomEvent (
-            'panel.randomInput', {
-                detail: {
-                    object: this_
-                }
-            });
-        
-        this.clearInput = new CustomEvent (
-            'panel.clearInput', {
-                detail: {
-                    object: this_
-                }
-            });
         
         // validate numeric input fields
         
@@ -453,22 +479,13 @@ define([
             }
         };
         
-        var validateNumericKeyup = function (e) {
-            
-            if (e.target.value.length < 1) {
-                e.target.value = 0;
-            }
-        };
-        
         // validate random density
         
         this.form.density.addEventListener('keydown', validateNumericKeydown);
-        this.form.density.addEventListener('keyup', validateNumericKeyup);
         
         // validate ruleID
         
         this.form.ruleID.addEventListener('keydown', validateNumericKeydown);
-        this.form.ruleID.addEventListener('keyup', validateNumericKeyup);
         
         // resize
         
@@ -478,8 +495,7 @@ define([
         
         this.inputChangeEvent();
         this.ruleIDKeydownEvent();
-        this.randomInputClickEvent();
-        this.clearInputClickEvent();
+        this.densityKeydownEvent();
         
         // event listeners
         
