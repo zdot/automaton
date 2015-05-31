@@ -58,6 +58,7 @@ define([
         this.animationClass = 'js-resizable-animate';
         this._oldY = 0;
         this._close = false;
+        this._moving = false;
         
         this.init();
         
@@ -109,11 +110,26 @@ define([
     Resizable.prototype.mousedown = function () {
         
         this.move = this.move.bind(this);
+        this._moving = true;
         window.addEventListener('mousemove', this.move);
     };
     
     
     Resizable.prototype.mouseup = function (e) {
+        
+        // we set this flag to prevent mouseup event from firing
+        // after an ordinary click. the mouseup event is registered
+        // on the window, and not the bar, because sometimes fast motion
+        // causes the mouseup event to fire off of the bar
+        
+        if (! this._moving) {
+            
+            return;
+        
+        } else {
+            
+            this._moving = false;
+        }
         
         // if the panel is mostly closed after resize,
         // close it the rest of the way
