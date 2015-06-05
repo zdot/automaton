@@ -54,7 +54,7 @@ define([
         this.wrapper = this.resizable.querySelector('.js-resizable-wrapper');
         this.close = this.resizable.querySelector('.js-resizable-close');
         this.barHeight = barHeight || 10;
-        this.barColor = barColor || 'cyan';
+        this.barColor = barColor || '#FFC800';
         this.animationClass = 'js-resizable-animate';
         this._oldY = 0;
         this._close = false;
@@ -505,7 +505,7 @@ define([
         
         // resize
         
-        this.resizable = new Resizable(this.options, 20, 'cyan');
+        this.resizable = new Resizable(this.options, 20, '#FFC800');
         
         // bind events
         

@@ -13,14 +13,14 @@
     +align()
     border-left: 5px solid transparent
     border-right: 5px solid transparent
-    border-top: 6px solid cyan
+    border-top: 6px solid #666
     height: 0
     width: 0
 
 
 @mixin ico-arrow-up
     +align()
-    border-bottom: 6px solid cyan
+    border-bottom: 6px solid #666
     border-left: 5px solid transparent
     border-right: 5px solid transparent
     height: 0
@@ -33,7 +33,7 @@
 
 .ico-menu:before
     
-    $color: cyan
+    $color: #666
     
     content: ""
     position: absolute
@@ -144,12 +144,9 @@ body
     height: rhythm(3)
     padding-left: 5px
 
-.settings input[type='text']::selection
-    color cyan
-
 
 .settings input[type='text']:focus, .settings input[type='text']:hover
-    background-color: cyan + 200
+    background-color: #FFC800 + 100
 
 
 .settings__readonly
@@ -206,11 +203,11 @@ body
 
 
 .scrollable::-webkit-scrollbar-track
-    background-color: magenta + 200
+    background-color: #FFC800 + 100
 
 
 .scrollable::-webkit-scrollbar-thumb
-    background-color: magenta
+    background-color: #FFC800
 
 
 .settings .rules canvas:hover
@@ -292,46 +289,12 @@ body
 
 .range__input:hover
     cursor: pointer
-    background-color: cyan + 200
+    background-color: #FFC800 + 100
 
 
 .range__input:hover::-webkit-slider-thumb,
 .range__input:focus::-webkit-slider-thumb
-    background-color: cyan
-
-
-.button
-    +adjust-font-size-to(12px)
-    background-color: cyan + 170
-    border: 0
-    border-bottom: 2px solid cyan
-    color: #666
-    height: rhythm(4)
-    text-align: center !important
-    transition: background-color .3s ease
-
-
-.button:focus
-    outline: 0
-
-
-.button.button--magenta
-    background-color: magenta + 170
-    border-color: magenta
-
-
-.button.button--magenta:hover
-    background-color: magenta + 200
-
-
-.button:active
-    background-color: cyan + 170
-    border-top: 3px solid white
-    border-bottom: 0
-
-
-.button:hover
-    background-color: cyan + 200
+    background-color: #FFC800
 
 
 // ---------------------------------------------- //
@@ -353,7 +316,7 @@ $bar-height: 20px
 
 
 .js-resizable-bar
-    background-color: cyan + 200
+    background-color: #ccc
     cursor: ns-resize
     height: $bar-height
     position: absolute
