@@ -24,10 +24,20 @@ define(['utils'], function (_) {
         var css_class = 'automaton';
         var rules = _.products(2, 3).reverse()
         
+        colors = [
+            [255,0,0],
+            [0,0,0],
+            [255,200,0],
+            [0,100,100],
+            
+            [50,0,255]
+        ]
+        
         this.aw = dimensions.w;
         this.ah = dimensions.h;
         this.size = size;
-        this.colors = _.createColors(rules);
+        this.colors = colors;
+        //this.colors = _.createColors(rules);
         this.ctx = _.createCanvas(
             this.cw, 
             this.ch, 
